@@ -34,11 +34,6 @@ This will start the application along with the mysql database using docker compo
 
 > Email: super.admin@test.com || Password: 12345678
 
-## Demo
-
-![Tuffero POS](public/images/screenshot.jpg)
-**Live Demo:** will update soon
-
 ## Tuffero POS Features
 
 -   **Products Management & Barcode Printing**
@@ -55,7 +50,3 @@ This will start the application along with the mysql database using docker compo
 -   **Unit Settings**
 -   **System Settings**
 -   **Reports**
-
-# License
-
-**[Creative Commons Attribution 4.0 cc-by-4.0](https://creativecommons.org/licenses/by/4.0/)**
