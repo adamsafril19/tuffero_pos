@@ -98,13 +98,13 @@ class ShopeeOrderImport implements ToCollection, WithHeadingRow
             'discount_percentage' => 0,
             'discount_amount' => $row['potongan_jika_ada'] ?? 0,
             'shipping_amount' => $row['biaya_pengiriman'] ?? 0,
-            'paid_amount' => $row['total_pembayaran'] ?? 0,
-            'total_amount' => $row['total_pembayaran'] ?? 0,
+            'paid_amount' => $row['total_harga_produk'] ?? 0,
+            'total_amount' => $row['total_harga_produk'] ?? 0,
             'due_amount' => 0,
             'status' => $this->mapStatus($row['status_pesanan'] ?? ''),
             'payment_status' => $this->mapPaymentStatus($row['status_pesanan'] ?? ''),
             'payment_method' => $row['metode_pembayaran'] ?? 'Shopee',
-            'note' => 'Imported from Shopee',
+            'note' => $row['catatan_dari_pembeli'] ?? 'Imported from Shopee',
             'order_number' => $row['no_pesanan'] ?? null,
             // 'completed_at' => isset($row['waktu_pesanan_selesai']) ? Carbon::parse($row['waktu_pesanan_selesai']) : null,
         ]);
@@ -130,7 +130,7 @@ class ShopeeOrderImport implements ToCollection, WithHeadingRow
         // Buat payment record
         SalePayment::create([
             'sale_id' => $sale->id,
-            'amount' => $row['total_pembayaran'] ?? 0,
+            'amount' => $row['total_harga_produk'] ?? 0,
             'date' => now(),
             'reference' => 'SHOPEE-' . time(),
             'payment_method' => $row['metode_pembayaran'] ?? 'Shopee',
