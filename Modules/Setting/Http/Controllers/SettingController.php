@@ -44,35 +44,40 @@ class SettingController extends Controller
 
 
     public function updateSmtp(StoreSmtpSettingsRequest $request) {
-        $toReplace = array(
-            'MAIL_MAILER='.env('MAIL_HOST'),
-            'MAIL_HOST="'.env('MAIL_HOST').'"',
-            'MAIL_PORT='.env('MAIL_PORT'),
-            'MAIL_FROM_ADDRESS="'.env('MAIL_FROM_ADDRESS').'"',
-            'MAIL_FROM_NAME="'.env('MAIL_FROM_NAME').'"',
-            'MAIL_USERNAME="'.env('MAIL_USERNAME').'"',
-            'MAIL_PASSWORD="'.env('MAIL_PASSWORD').'"',
-            'MAIL_ENCRYPTION="'.env('MAIL_ENCRYPTION').'"'
-        );
-
-        $replaceWith = array(
-            'MAIL_MAILER='.$request->mail_mailer,
-            'MAIL_HOST="'.$request->mail_host.'"',
-            'MAIL_PORT='.$request->mail_port,
-            'MAIL_FROM_ADDRESS="'.$request->mail_from_address.'"',
-            'MAIL_FROM_NAME="'.$request->mail_from_name.'"',
-            'MAIL_USERNAME="'.$request->mail_username.'"',
-            'MAIL_PASSWORD="'.$request->mail_password.'"',
-            'MAIL_ENCRYPTION="'.$request->mail_encryption.'"');
-
         try {
-            file_put_contents(base_path('.env'), str_replace($toReplace, $replaceWith, file_get_contents(base_path('.env'))));
+            $envPath = base_path('.env');
+            $envContent = file_get_contents($envPath);
+
+            // Update .env dengan regex yang lebih akurat
+            $envContent = preg_replace([
+                '/^MAIL_MAILER=.*/m',
+                '/^MAIL_HOST=.*/m',
+                '/^MAIL_PORT=.*/m',
+                '/^MAIL_USERNAME=.*/m',
+                '/^MAIL_PASSWORD=.*/m',
+                '/^MAIL_ENCRYPTION=.*/m',
+                '/^MAIL_FROM_ADDRESS=("?)(.*)\1/m',
+                '/^MAIL_FROM_NAME=("?)(.*)\1/m'
+            ], [
+                'MAIL_MAILER='.$request->mail_mailer,
+                'MAIL_HOST='.$request->mail_host,
+                'MAIL_PORT='.$request->mail_port,
+                'MAIL_USERNAME='.$request->mail_username,
+                'MAIL_PASSWORD='.$request->mail_password,
+                'MAIL_ENCRYPTION='.$request->mail_encryption,
+                'MAIL_FROM_ADDRESS="'.$request->mail_from_address.'"',
+                'MAIL_FROM_NAME="'.$request->mail_from_name.'"'
+            ], $envContent);
+
+            file_put_contents($envPath, $envContent);
+
+            Artisan::call('config:clear');
             Artisan::call('cache:clear');
 
             toast('Mail Settings Updated!', 'info');
         } catch (\Exception $exception) {
             Log::error($exception);
-            session()->flash('settings_smtp_message', 'Something Went Wrong!');
+            session()->flash('settings_smtp_message', 'Error: ' . $exception->getMessage());
         }
 
         return redirect()->route('settings.index');

@@ -9,7 +9,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="checkout-form" action="{{ route('app.pos.store') }}" method="POST">
+            <form id="checkout-form" action="{{ route('app.pos.storecust') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     @if (session()->has('checkout_message'))
@@ -22,9 +22,9 @@
                             </div>
                         </div>
                     @endif
+
                     <div class="row">
                         <div class="col-lg-7">
-                            <input type="hidden" value="{{ $customer_id }}" name="customer_id">
                             <input type="hidden" value="{{ $global_tax }}" name="tax_percentage">
                             <input type="hidden" value="{{ $global_discount }}" name="discount_percentage">
                             <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
@@ -37,8 +37,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="paid_amount">Received Amount <span class="text-danger">*</span></label>
-                                        <input id="paid_amount" type="text" class="form-control" name="paid_amount" value="{{ $total_with_shipping }}" required>
+                                        <label for="paid_amount">Payment Amount <span class="text-danger">*</span></label>
+                                        <input id="paid_amount" type="text" class="form-control" name="paid_amount" value="{{ 0 }}" readonly required>
                                     </div>
                                 </div>
                             </div>

@@ -9,7 +9,13 @@ class SaleShipment extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'sale_id',
+        'shipment_number',
+        'shipping_method',
+        'tracking_number',
+        'scheduled_at'
+    ];
 
     public function sale()
     {

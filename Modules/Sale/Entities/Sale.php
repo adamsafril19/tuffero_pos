@@ -3,6 +3,7 @@
 namespace Modules\Sale\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\People\Entities\Customer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Sale extends Model
@@ -17,6 +18,15 @@ class Sale extends Model
 
     public function salePayments() {
         return $this->hasMany(SalePayment::class, 'sale_id', 'id');
+    }
+
+    public function shipment() {
+        return $this->hasOne(SaleShipment::class, 'sale_id', 'id');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(\Modules\People\Entities\Customer::class);
     }
 
     public static function boot() {

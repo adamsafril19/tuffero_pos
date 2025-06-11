@@ -69,6 +69,20 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="scheduled_at">Jadwal Pengiriman <span class="text-danger">*</span></label>
+                                        <input type="datetime-local"
+                                               class="form-control @error('scheduled_at') is-invalid @enderror"
+                                               name="scheduled_at"
+                                               id="scheduled_at"
+                                               required
+                                               value="{{ old('scheduled_at', $sale->shipment->scheduled_at ?? '') }}">
+                                        @error('scheduled_at')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="from-group">
                                         <div class="form-group">
                                             <label for="payment_method">Payment Method <span class="text-danger">*</span></label>

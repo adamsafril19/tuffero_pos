@@ -14,17 +14,26 @@ class SendQuotationEmailController extends Controller
 {
     public function __invoke(Quotation $quotation) {
         try {
-            Mail::to($quotation->customer->customer_email)->send(new QuotationMail($quotation));
+            // Validasi customer dan email
+            $customer = $quotation->customer;
+            if (!$customer) {
+                throw new \Exception('Customer tidak ditemukan');
+            }
 
-            $quotation->update([
-                'status' => 'Sent'
-            ]);
+            $email = $customer->customer_email;
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                throw new \Exception('Format email customer tidak valid');
+            }
 
-            toast('Sent On "' . $quotation->customer->customer_email . '"!', 'success');
+            Mail::to($email)->send(new QuotationMail($quotation));
+
+            $quotation->update(['status' => 'Sent']);
+
+            toast('Quotation berhasil dikirim ke ' . $email, 'success');
 
         } catch (\Exception $exception) {
-            Log::error($exception);
-            toast('Something Went Wrong!', 'error');
+            Log::error('Gagal mengirim quotation email: ' . $exception->getMessage());
+            toast('Gagal mengirim email: ' . $exception->getMessage(), 'error');
         }
 
         return back();

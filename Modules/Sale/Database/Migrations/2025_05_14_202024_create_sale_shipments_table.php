@@ -15,8 +15,9 @@ return new class extends Migration // Renamed to avoid class name conflict
             $table->id();
             $table->foreignId('sale_id')->constrained('sales')->onDelete('cascade');
             $table->string('tracking_number')->nullable();
-            $table->string('shipping_option')->nullable();
-            $table->string('delivery_type')->nullable(); // pickup/courier
+            $table->enum('shipping_option', ['JNE', 'JNT', 'SICEPAT', 'GOSEND'])->nullable();
+            $table->enum('delivery_type', ['pickup', 'courier'])->nullable();
+            $table->dateTime('scheduled_at')->nullable();
             $table->text('destination_address')->nullable();
             $table->string('city')->nullable();
             $table->string('province')->nullable();

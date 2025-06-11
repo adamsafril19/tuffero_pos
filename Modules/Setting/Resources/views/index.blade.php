@@ -131,12 +131,6 @@
                             <div class="form-row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="mail_mailer">MAIL_MAILER</label>
-                                        <input type="text" class="form-control" name="mail_mailer" value="{{ env('MAIL_MAILER') }}">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
                                         <label for="mail_username">MAIL_USERNAME</label>
                                         <input type="text" class="form-control" name="mail_username" value="{{ env('MAIL_USERNAME') }}">
                                     </div>

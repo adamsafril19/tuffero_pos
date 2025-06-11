@@ -14,13 +14,14 @@ use Modules\Sale\Entities\SaleDetails;
 use Modules\Sale\Entities\SalePayment;
 use Modules\Sale\Http\Requests\StoreSaleRequest;
 use Modules\Sale\Http\Requests\UpdateSaleRequest;
+use Modules\Setting\Entities\Setting;
 
 class SaleController extends Controller
 {
 
     public function index(SalesDataTable $dataTable) {
         abort_if(Gate::denies('access_sales'), 403);
-
+        $settings = \Modules\Setting\Entities\Setting::first();
         return $dataTable->render('sale::index');
     }
 
@@ -148,6 +149,10 @@ class SaleController extends Controller
 
 
     public function update(UpdateSaleRequest $request, Sale $sale) {
+        $request->validate([
+            'scheduled_at' => 'required|date_format:Y-m-d\TH:i'
+        ]);
+
         DB::transaction(function () use ($request, $sale) {
 
             $due_amount = $request->total_amount - $request->paid_amount;
@@ -188,6 +193,13 @@ class SaleController extends Controller
                 'tax_amount' => Cart::instance('sale')->tax() * 100,
                 'discount_amount' => Cart::instance('sale')->discount() * 100,
             ]);
+
+            // Update shipment schedule
+            if ($sale->shipment) {
+                $sale->shipment->update([
+                    'scheduled_at' => $request->scheduled_at
+                ]);
+            }
 
             foreach (Cart::instance('sale')->content() as $cart_item) {
                 SaleDetails::create([

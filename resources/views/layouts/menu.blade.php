@@ -5,7 +5,7 @@
 </li>
 
 @can('access_products')
-<li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('products.*') || request()->routeIs('product-categories.*') ? 'c-show' : '' }}">
+<li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('products.*') || request()->routeIs('product-categories.*') || request()->routeIs('products.variations.*') ? 'c-show' : '' }}">
     <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
         <i class="c-sidebar-nav-icon bi bi-journal-bookmark" style="line-height: 1;"></i> Products
     </a>
@@ -14,6 +14,13 @@
         <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link {{ request()->routeIs('product-categories.*') ? 'c-active' : '' }}" href="{{ route('product-categories.index') }}">
                 <i class="c-sidebar-nav-icon bi bi-collection" style="line-height: 1;"></i> Categories
+            </a>
+        </li>
+        @endcan
+        @can('access_product_variations')
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link {{ request()->routeIs('products.variations.*') ? 'c-active' : '' }}" href="{{ route('products.variations.index') }}">
+                <i class="c-sidebar-nav-icon bi bi-list-nested" style="line-height: 1;"></i> Variations
             </a>
         </li>
         @endcan
@@ -108,7 +115,7 @@
     </li>
 @endcan
 
-{{-- @can('access_purchase_returns')
+@can('access_purchase_returns')
     <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('purchase-returns.*') || request()->routeIs('purchase-return-payments.*') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
             <i class="c-sidebar-nav-icon bi bi-arrow-return-right" style="line-height: 1;"></i> Purchase Returns
@@ -130,10 +137,10 @@
             </li>
         </ul>
     </li>
-@endcan --}}
+@endcan
 
 @can('access_sales')
-    <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('sales.*') || request()->routeIs('sale-payments*') ? 'c-show' : '' }}">
+    <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('sales.*') || request()->routeIs('sale-payments*') || request()->routeIs('customer.pos') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
             <i class="c-sidebar-nav-icon bi bi-receipt" style="line-height: 1;"></i> Sales
         </a>
@@ -156,7 +163,15 @@
     </li>
 @endcan
 
-{{-- @can('access_sale_returns')
+@can('access_customer_pos')
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link {{ request()->routeIs('customer.pos') ? 'c-active' : '' }}" href="{{ route('customer.pos') }}">
+                        <i class="c-sidebar-nav-icon bi bi-cart" style="line-height: 1;"></i> POS Customer
+                    </a>
+                </li>
+@endcan
+
+@can('access_sale_returns')
     <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('sale-returns.*') || request()->routeIs('sale-return-payments.*') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
             <i class="c-sidebar-nav-icon bi bi-arrow-return-left" style="line-height: 1;"></i> Sale Returns
@@ -178,9 +193,9 @@
             </li>
         </ul>
     </li>
-@endcan --}}
+@endcan
 
-{{-- @can('access_expenses')
+@can('access_expenses')
     <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('expenses.*') || request()->routeIs('expense-categories.*') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
             <i class="c-sidebar-nav-icon bi bi-wallet2" style="line-height: 1;"></i> Expenses
@@ -207,7 +222,7 @@
             </li>
         </ul>
     </li>
-@endcan --}}
+@endcan
 
 @can('access_customers|access_suppliers')
     <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('customers.*') || request()->routeIs('suppliers.*') ? 'c-show' : '' }}">
@@ -233,7 +248,7 @@
     </li>
 @endcan
 
-{{-- @can('access_reports')
+@can('access_reports')
     <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('*-report.index') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
             <i class="c-sidebar-nav-icon bi bi-graph-up" style="line-height: 1;"></i> Reports
@@ -271,7 +286,7 @@
             </li>
         </ul>
     </li>
-@endcan --}}
+@endcan
 
 @can('access_user_management')
     <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('roles*') ? 'c-show' : '' }}">

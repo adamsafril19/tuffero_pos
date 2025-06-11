@@ -13,21 +13,10 @@
                     </div>
                 @endif
 
-                <div class="form-group">
-                    <label for="customer_id">Customer <span class="text-danger">*</span></label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <a href="{{ route('customers.create') }}" class="btn btn-primary">
-                                <i class="bi bi-person-plus"></i>
-                            </a>
-                        </div>
-                        <select wire:model.live="customer_id" id="customer_id" class="form-control">
-                            <option value="" selected>Select Customer</option>
-                            @foreach($customers as $customer)
-                                <option value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                <div class="customer-info mb-4 p-3 bg-light rounded">
+                    <h6>Pelanggan:
+                        <strong>{{ auth()->user()->name }}</strong>
+                    </h6>
                 </div>
 
                 <div class="table-responsive">
@@ -48,8 +37,7 @@
                                         {{ $cart_item->name }} <br>
                                         <span class="badge badge-success">
                                         {{ $cart_item->options->code }}
-                                    </span>
-                                        @include('livewire.includes.product-cart-modal')
+                                        </span>
                                     </td>
 
                                     <td class="align-middle">
@@ -112,27 +100,6 @@
                 </div>
             </div>
 
-            <div class="form-row">
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="tax_percentage">Order Tax (%)</label>
-                        <input wire:model.blur="global_tax" type="number" class="form-control" min="0" max="100" value="{{ $global_tax }}" required>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="discount_percentage">Discount (%)</label>
-                        <input wire:model.blur="global_discount" type="number" class="form-control" min="0" max="100" value="{{ $global_discount }}" required>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="shipping_amount">Shipping</label>
-                        <input wire:model.blur="shipping" type="number" class="form-control" min="0" value="0" required step="0.01">
-                    </div>
-                </div>
-            </div>
-
             <div class="row mb-3">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -164,6 +131,6 @@
     </div>
 
     {{--Checkout Modal--}}
-    @include('livewire.pos.includes.checkout-modal')
+    @include('livewire.pos.includes.checkout-modalcust')
 
 </div>

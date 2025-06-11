@@ -18,21 +18,35 @@ class HomeController extends Controller
 {
 
     public function index() {
+        // Total penjualan yang telah selesai (dalam “cents” atau satuan terkecil)
         $sales = Sale::completed()->sum('total_amount');
+        // Total retur penjualan yang telah selesai
         $sale_returns = SaleReturn::completed()->sum('total_amount');
+        // Total retur pembelian yang telah selesai (meskipun tidak dipakai di profit)
         $purchase_returns = PurchaseReturn::completed()->sum('total_amount');
-        $product_costs = 0;
 
-        foreach (Sale::completed()->with('saleDetails')->get() as $sale) {
+        // Hitung total biaya pokok penjualan
+        $product_costs = 0;
+        $completedSales = Sale::completed()->with('saleDetails.product')->get();
+        foreach ($completedSales as $sale) {
             foreach ($sale->saleDetails as $saleDetail) {
-                if (!is_null($saleDetail->product)) {
+                if ($saleDetail->product) {
+                    // asumsikan product_cost juga dalam satuan terkecil sehingga perlu dibagi 100
                     $product_costs += $saleDetail->product->product_cost * $saleDetail->quantity;
                 }
             }
         }
 
+        // Total expense (biaya operasional) dari tabel expenses
+        $totalExpenses = Expense::sum('amount');
+
+        // Konversi ke “rupiah” (asumsi semua nilai disimpan dalam satuan terkecil)
         $revenue = ($sales - $sale_returns) / 100;
-        $profit = $revenue - $product_costs;
+        $productCostsInCurrency = $product_costs / 100;
+        $expensesInCurrency = $totalExpenses / 100;
+
+        // Profit = revenue - product cost - expenses
+        $profit = $revenue - $productCostsInCurrency - $expensesInCurrency;
 
         return view('home', [
             'revenue'          => $revenue,

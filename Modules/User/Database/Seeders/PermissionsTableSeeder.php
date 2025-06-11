@@ -79,6 +79,7 @@ class PermissionsTableSeeder extends Seeder
             'delete_sales',
             //POS Sale
             'create_pos_sales',
+            'access_customer_pos',
             //Sale Payments
             'access_sale_payments',
             //Sale Returns

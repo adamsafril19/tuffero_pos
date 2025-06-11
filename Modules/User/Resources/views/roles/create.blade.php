@@ -541,6 +541,14 @@
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
                                                         <input type="checkbox" class="custom-control-input"
+                                                               id="access_customer_pos" name="permissions[]"
+                                                               value="access_customer_pos" {{ old('access_customer_pos') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="access_customer_pos">POS Customer</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
                                                                id="access_sale_payments" name="permissions[]"
                                                                value="access_sale_payments" {{ old('access_sale_payments') ? 'checked' : '' }}>
                                                         <label class="custom-control-label" for="access_sale_payments">Payments</label>
