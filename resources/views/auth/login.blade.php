@@ -506,7 +506,7 @@
 
             <p class="developer mt-5 lead">
                 Developed By
-                <a href="#" class="font-weight-bold">emm siapa ya??</a>
+                <a href="#" class="font-weight-bold">Kelompok 1</a>
             </p>
         </div>
     </div>
