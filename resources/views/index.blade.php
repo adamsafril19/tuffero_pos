@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Tuffero</title>
+        <title>Tuffero Patisserie</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap Icons-->
@@ -77,7 +77,7 @@
                 Dengan lebih dari <strong>2.000 pesanan setiap harinya</strong>, kami bangga menjadi bagian dari 
                 momen spesial Anda — baik secara online maupun di toko <em>offline</em> kami.
                 </p>
-                <a class="btn btn-brown btn-xl text-white" href="#services">Lihat Produk Kami</a>
+                <a class="btn btn-brown btn-xl text-white" href="#product">Lihat Produk Kami</a>
             </div>
             </div>
         </div>
@@ -87,8 +87,8 @@
         <div class="container px-4 px-lg-5">
             <!-- Judul & Alasan Kenapa Harus Beli -->
             <h2 class="text-center fw-bold mb-5" style="color: #7B3F00; font-family: 'Playfair Display', serif;">
-            Kenapa harus beli kue di <span style="color: #a35e0f;">Macaron</span> 
-            <span style="font-family: 'Dancing Script', cursive; font-size: 2rem;">Tuffero</span>
+            Kenapa harus beli kue di <span style="font-family: 'Dancing Script', cursive; font-size: 2rem;">Tuffero </span>
+            <span style="color: #a35e0f;">Patisserie</span> 
             </h2>
 
             <div class="row justify-content-center mb-5">
@@ -149,7 +149,9 @@
                 <img src="assets/macaron1.jpg" class="card-img-top" alt="Macaron Box">
                 <div class="card-body text-center">
                     <h5 class="card-title" style="color: #7B3F00;">Macaron Box</h5>
-                    <p class="card-text text-muted">Isi 6 pcs macaron warna-warni, rasa klasik & premium favorit.</p>
+                    <p class="card-text text-muted">Mini french macaron isi 5 mix rasa perboxnya <br>
+                         dibuat dari bahan berkualitas coklat asli, pewarna aman, dan less sugar. 
+                         Dikemas higienis dengan kertas foodgrade dan bisa dikirim ke seluruh Indonesia.</p>
                 </div>
                 </div>
             </div>
@@ -160,7 +162,9 @@
                 <img src="assets/nastar3.jpg" class="card-img-top" alt="Nastar Tuffero">
                 <div class="card-body text-center">
                     <h5 class="card-title" style="color: #7B3F00;">Nastar Tuffero</h5>
-                    <p class="card-text text-muted">Kue klasik isi nanas dengan tekstur lumer dan isian legit.</p>
+                    <p class="card-text text-muted">Nastar premium dengan isian selai nanas homemade yang lembut dan manis seimbang. 
+                        Dibuat dari bahan pilihan, menghasilkan tekstur lumer di mulut. 
+                        Dikemas higienis cocok untuk hampers atau sajian spesial.</p>
                 </div>
                 </div>
             </div>
@@ -171,7 +175,9 @@
                 <img src="assets/brownies1.jpg" class="card-img-top" alt="Fudgy Brownies">
                 <div class="card-body text-center">
                     <h5 class="card-title" style="color: #7B3F00;">Fudgy Brownies</h5>
-                    <p class="card-text text-muted">Brownies super fudgy dengan topping choco chips & almond slice.</p>
+                    <p class="card-text text-muted">Brownies coklat dengan tekstur fudgy yang padat dan moist. 
+                        Terbuat dari coklat asli dan bahan premium, menghadirkan rasa rich dan intens. 
+                        Cocok sebagai camilan mewah atau hadiah istimewa.</p>
                 </div>
                 </div>
             </div>
@@ -181,18 +187,18 @@
         <section id="portfolio" class="bg-white py-5">
         <div class="container px-4 px-lg-5">
             <div class="text-center mb-5">
-            <h2 class="fw-bold text-dark">Di Balik Layar Bersama Tuffero</h2>
-            <p class="text-muted">Cuplikan proses kami saat melakukan wawancara dan observasi langsung dengan tim Tuffero.</p>
+            <h2 class="fw-bold text-dark">Di Balik Layar Bersama Tuffero Patisserie</h2>
+            <p class="text-muted">Cuplikan proses kami saat melakukan wawancara dan observasi langsung dengan tim Tuffero Patisserie.</p>
             </div>
             <div class="row g-4">
 
             <!-- Foto Member 1 -->
             <div class="col-lg-6 col-md-6">
                 <div class="card border-0 shadow-sm h-100">
-                <img src="assets/fotomember1.jpg" class="card-img-top" alt="Member 1 Wawancara Tuffero">
+                <img src="assets/fotomember2.jpg" class="card-img-top" alt="Member 1 Wawancara Tuffero">
                 <div class="card-body">
-                    <h5 class="card-title fw-semibold">Sesi Wawancara Bersama Pihak Tuffero</h5>
-                    <p class="card-text text-muted">Tim kami mendalami visi dan cerita bisnis dari Tuffero secara langsung untuk memahami karakter brand yang ingin ditampilkan.</p>
+                    <h5 class="card-title fw-semibold">Sesi Wawancara Bersama Pihak Tuffero Patisserie</h5>
+                    <p class="card-text text-muted">Tim kami mendalami visi dan cerita bisnis dari Tuffero Patisserie secara langsung untuk memahami karakter brand yang ingin ditampilkan.</p>
                 </div>
                 </div>
             </div>
@@ -200,10 +206,10 @@
             <!-- Foto Member 2 -->
             <div class="col-lg-6 col-md-6">
                 <div class="card border-0 shadow-sm h-100">
-                <img src="assets/fotomember2.jpg" class="card-img-top" alt="Member 2 Diskusi Tuffero">
+                <img src="assets/fotomember1.jpg" class="card-img-top" alt="Member 2 Diskusi Tuffero">
                 <div class="card-body">
                     <h5 class="card-title fw-semibold">Diskusi Konsep Branding</h5>
-                    <p class="card-text text-muted">Melalui pendekatan langsung, tim merancang solusi branding yang sesuai dengan identitas Tuffero.</p>
+                    <p class="card-text text-muted">Melalui pendekatan langsung, tim merancang solusi branding yang sesuai dengan identitas Tuffero Patisserie.</p>
                 </div>
                 </div>
             </div>
