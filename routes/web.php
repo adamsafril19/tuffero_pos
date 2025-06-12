@@ -10,7 +10,7 @@ use Modules\Product\Http\Controllers\VariationController;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('index');
 })->middleware('guest');
 
 Auth::routes(['register' => false]);
