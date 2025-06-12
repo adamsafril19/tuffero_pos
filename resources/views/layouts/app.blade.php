@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>@yield('title') || {{ config('app.name') }}</title>
-    <meta content="Fahim Anzam Dip" name="author">
+    <meta content="AdamS" name="author">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
     <!-- Favicon -->
@@ -13,8 +13,8 @@
 </head>
 
 <body class="c-app">
-    @include('layouts.sidebar')
 
+    @include('layouts.sidebar')
     <div class="c-wrapper">
         <header class="c-header c-header-light c-header-fixed">
             @include('layouts.header')

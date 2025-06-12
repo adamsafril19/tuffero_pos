@@ -16,7 +16,10 @@ Route::group(['middleware' => 'auth'], function () {
     //POS
     Route::get('/app/pos', 'PosController@index')->name('app.pos.index');
     Route::post('/app/pos', 'PosController@store')->name('app.pos.store');
-    Route::post('/app/poscust', 'PosController@storeCust')->name('app.pos.storecust');
+    Route::get('/customer-pos', 'PosController@customerPOS')->name('customer.pos');
+    Route::post('/customer-pos/checkout', 'PosController@customerCheckout')->name('customer.pos.checkout');
+    // Route::post('/app/poscust', 'PosController@storeCust')->name('app.pos.storecust');
+    Route::post('/customer-pos/store', 'PosController@storeCust')->middleware('permission:access_customer_pos')->name('customer.pos.storecust');
 
     //Generate PDF
     Route::get('/sales/pdf/{id}', function ($id) {

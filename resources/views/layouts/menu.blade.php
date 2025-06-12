@@ -17,13 +17,13 @@
             </a>
         </li>
         @endcan
-        @can('access_product_variations')
+        {{-- @can('access_product_variations')
         <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link {{ request()->routeIs('products.variations.*') ? 'c-active' : '' }}" href="{{ route('products.variations.index') }}">
                 <i class="c-sidebar-nav-icon bi bi-list-nested" style="line-height: 1;"></i> Variations
             </a>
         </li>
-        @endcan
+        @endcan --}}
         @can('create_products')
         <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link {{ request()->routeIs('products.create') ? 'c-active' : '' }}" href="{{ route('products.create') }}">
@@ -153,22 +153,16 @@
                 </li>
             </ul>
         @endcan
-        <ul class="c-sidebar-nav-dropdown-items">
-            <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link {{ request()->routeIs('sales.index') ? 'c-active' : '' }}" href="{{ route('sales.index') }}">
-                    <i class="c-sidebar-nav-icon bi bi-journals" style="line-height: 1;"></i> All Sales
-                </a>
-            </li>
-        </ul>
-    </li>
-@endcan
-
-@can('access_customer_pos')
+        @can('show_sales')
+            <ul class="c-sidebar-nav-dropdown-items">
                 <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link {{ request()->routeIs('customer.pos') ? 'c-active' : '' }}" href="{{ route('customer.pos') }}">
-                        <i class="c-sidebar-nav-icon bi bi-cart" style="line-height: 1;"></i> POS Customer
+                    <a class="c-sidebar-nav-link {{ request()->routeIs('sales.index') ? 'c-active' : '' }}" href="{{ route('sales.index') }}">
+                        <i class="c-sidebar-nav-icon bi bi-journals" style="line-height: 1;"></i> All Sales
                     </a>
                 </li>
+            </ul>
+        @endcan
+    </li>
 @endcan
 
 @can('access_sale_returns')

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Modules\People\Entities\Customer;
 use Modules\Upload\Entities\Upload;
 use Modules\User\Rules\MatchCurrentPassword;
 
@@ -19,15 +20,22 @@ class ProfileController extends Controller
 
 
     public function update(Request $request) {
+
+        $user = auth()->user();
+        $oldEmail = $user->email;    // simpan email lama
+
         $request->validate([
             'name'  => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . auth()->id()
+            'email' => 'required|email|unique:users,email,' . $user->id
         ]);
 
-        auth()->user()->update([
+        $user->update([
             'name'  => $request->name,
-            'email' => $request->email
+            'email' => $request->email,
         ]);
+
+        Customer::where('customer_email', $oldEmail)
+            ->update(['customer_email' => $request->email]);
 
         if ($request->has('image')) {
             if ($request->has('image')) {

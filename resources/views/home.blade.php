@@ -8,6 +8,13 @@
     </ol>
 @endsection
 
+@section('third_party_scripts')
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"
+            integrity="sha512-asxKqQghC1oBShyhiBwA+YgotaSYKxGP1rcSYTDrB0U6DxwlJjU59B67U8+5/++uFjcuVM8Hh5cokLjZlhm3Vg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+@endsection
+
 @section('content')
     <div class="container-fluid">
         @can('show_total_stats')
@@ -91,7 +98,7 @@
                         Overview of {{ now()->format('F, Y') }}
                     </div>
                     <div class="card-body d-flex justify-content-center">
-                        <div class="chart-container" style="position: relative; height:auto; width:280px">
+                        <div class="chart-container" style="position: relative; height:auto; width:300px">
                             <canvas id="currentMonthChart"></canvas>
                         </div>
                     </div>
@@ -99,6 +106,38 @@
             </div>
             @endcan
         </div>
+        @endcan
+
+        {{-- Tambahan Chart Baru --}}
+        @can('show_customer_transaction')
+            <div class="row mb-4">
+                <div class="col-lg-12">
+                    <div class="card shadow-sm">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5>Transactions per Customer</h5>
+                            <div class="filter-container d-flex flex-row">
+                                <select id="monthFilter" class="form-control form-control-sm">
+                                    @foreach(range(1,12) as $month)
+                                        <option value="{{ $month }}" {{ $month == date('m') ? 'selected' : '' }}>
+                                            {{ DateTime::createFromFormat('!m', $month)->format('F') }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <select id="yearFilter" class="form-control form-control-sm ml-2">
+                                    @foreach(range(date('Y')-5, date('Y')) as $year)
+                                        <option value="{{ $year }}" {{ $year == date('Y') ? 'selected' : '' }}>{{ $year }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container" style="width:80%; aspect-ratio: 16/9;">
+                                {!! $chart->container() !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         @endcan
 
         @can('show_monthly_cashflow')
@@ -118,12 +157,38 @@
     </div>
 @endsection
 
-@section('third_party_scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"
-            integrity="sha512-asxKqQghC1oBShyhiBwA+YgotaSYKxGP1rcSYTDrB0U6DxwlJjU59B67U8+5/++uFjcuVM8Hh5cokLjZlhm3Vg=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-@endsection
-
 @push('page_scripts')
     @vite('resources/js/chart-config.js')
+    {!! $chart->script() !!}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const updateChart = () => {
+                fetch("{{ route('filter.chart') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        month:  document.getElementById('monthFilter').value,
+                        year:   document.getElementById('yearFilter').value,
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    chart.updateOptions({
+                        xaxis: { categories: data.xaxis },
+                        series: [{ data: data.dataset }]
+                    });
+                })
+                .catch(console.error);
+            };
+
+            document.getElementById('monthFilter').addEventListener('change', updateChart);
+            document.getElementById('yearFilter').addEventListener('change',  updateChart);
+        });
+    </script>
 @endpush
+
+

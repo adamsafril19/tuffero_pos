@@ -18,12 +18,6 @@ Auth::routes(['register' => false]);
 
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/customer-pos', [\Modules\Sale\Http\Controllers\PosController::class, 'customerPOS'])
-        ->name('customer.pos')
-        ->middleware(['auth']);
-
-    Route::post('/customer-pos/checkout', [\Modules\Sale\Http\Controllers\PosController::class, 'customerCheckout'])
-        ->name('customer.pos.checkout');
 
     // Product Variations
     Route::resource('products/variations', '\Modules\Product\Http\Controllers\VariationController')
@@ -47,4 +41,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/shopee/import', [App\Http\Controllers\ShopeeImportController::class, 'import'])->name('shopee.import');
 
     Route::get('/sales/baru/pdf/{id}', [\Modules\Sale\Http\Controllers\PosController::class, 'pdf'])->name('sale.baru.pdf');
+
+    // Jika Anda pakai prefix maupun middleware auth, sesuaikan:
+    Route::post('/filter-chart', [\App\Http\Controllers\HomeController::class, 'filterChart'])
+    ->name('filter.chart')
+    ->middleware('auth');
+
 });

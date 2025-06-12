@@ -497,9 +497,9 @@
 
                 <div class="form-footer">
                     <div class="col-8 text-right">
-                        <a class="forgot-password" href="{{ route('password.request') }}">
+                        {{-- <a class="forgot-password" href="{{ route('password.request') }}">
                             Reset Password?
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
             </form>

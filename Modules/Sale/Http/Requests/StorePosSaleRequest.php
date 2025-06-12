@@ -32,6 +32,6 @@ class StorePosSaleRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('create_pos_sales');
+        return Gate::allows('create_pos_sales') || Gate::allows('access_customer_pos');
     }
 }

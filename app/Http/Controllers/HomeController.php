@@ -13,16 +13,37 @@ use Modules\Sale\Entities\Sale;
 use Modules\Sale\Entities\SalePayment;
 use Modules\SalesReturn\Entities\SaleReturn;
 use Modules\SalesReturn\Entities\SaleReturnPayment;
+use ArielMejiaDev\LarapexCharts\LarapexChart;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    public function index()
+    {
+        // Ambil data transaksi per customer
+        $salesData = Sale::with('customer')
+        ->selectRaw('customer_id, SUM(total_amount) as total')
+        ->groupBy('customer_id')
+        ->get();
 
-    public function index() {
-        // Total penjualan yang telah selesai (dalam “cents” atau satuan terkecil)
+        $customers = $salesData->pluck('customer.customer_name')->toArray();
+        $totals    = $salesData->pluck('total')->map(fn($v) => $v / 100)->toArray();
+
+        // Buat horizontal bar chart (tanpa setHeight)
+        $chart = (new \ArielMejiaDev\LarapexCharts\LarapexChart)
+        ->horizontalBarChart()
+        ->setColors(['#1f77b4'])
+        ->setXAxis($customers)
+        ->setDataset([[
+            'name' => 'Transaksi',
+            'data' => $totals,
+        ]]);
+
+
+
+        // Data existing untuk profit dan revenue
         $sales = Sale::completed()->sum('total_amount');
-        // Total retur penjualan yang telah selesai
         $sale_returns = SaleReturn::completed()->sum('total_amount');
-        // Total retur pembelian yang telah selesai (meskipun tidak dipakai di profit)
         $purchase_returns = PurchaseReturn::completed()->sum('total_amount');
 
         // Hitung total biaya pokok penjualan
@@ -31,31 +52,51 @@ class HomeController extends Controller
         foreach ($completedSales as $sale) {
             foreach ($sale->saleDetails as $saleDetail) {
                 if ($saleDetail->product) {
-                    // asumsikan product_cost juga dalam satuan terkecil sehingga perlu dibagi 100
                     $product_costs += $saleDetail->product->product_cost * $saleDetail->quantity;
                 }
             }
         }
 
-        // Total expense (biaya operasional) dari tabel expenses
         $totalExpenses = Expense::sum('amount');
 
-        // Konversi ke “rupiah” (asumsi semua nilai disimpan dalam satuan terkecil)
+        // Konversi ke "rupiah"
         $revenue = ($sales - $sale_returns) / 100;
         $productCostsInCurrency = $product_costs / 100;
         $expensesInCurrency = $totalExpenses / 100;
-
-        // Profit = revenue - product cost - expenses
         $profit = $revenue - $productCostsInCurrency - $expensesInCurrency;
 
         return view('home', [
-            'revenue'          => $revenue,
-            'sale_returns'     => $sale_returns / 100,
+            'chart' => $chart,
+            'revenue' => $revenue,
+            'sale_returns' => $sale_returns / 100,
             'purchase_returns' => $purchase_returns / 100,
-            'profit'           => $profit
+            'profit' => $profit
         ]);
     }
 
+    public function filterChart(Request $request)
+    {
+        $query = Sale::with('customer');
+
+        if ($request->filled('month')) {
+            $query->whereMonth('date', $request->month);
+        }
+        if ($request->filled('year')) {
+            $query->whereYear('date', $request->year);
+        }
+
+        $salesData = $query
+            ->selectRaw('customer_id, SUM(total_amount) as total')
+            ->groupBy('customer_id')
+            ->get();
+
+        return response()->json([
+            'xaxis'   => $salesData->pluck('customer.customer_name')->toArray(),
+            'dataset' => $salesData->pluck('total')
+                                  ->map(fn($v) => $v / 100)
+                                  ->toArray(),
+        ]);
+    }
 
     public function currentMonthChart() {
         abort_if(!request()->ajax(), 404);

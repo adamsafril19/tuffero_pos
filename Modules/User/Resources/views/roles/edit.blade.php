@@ -96,6 +96,14 @@
                                                 <div class="col-12">
                                                     <div class="custom-control custom-switch">
                                                         <input type="checkbox" class="custom-control-input"
+                                                               id="show_customer_transaction" name="permissions[]"
+                                                               value="show_customer_transaction" {{ $role->hasPermissionTo('show_customer_transaction') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="show_customer_transaction">Customer Transaction</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
                                                                id="show_monthly_cashflow" name="permissions[]"
                                                                value="show_monthly_cashflow" {{ $role->hasPermissionTo('show_monthly_cashflow') ? 'checked' : '' }}>
                                                         <label class="custom-control-label" for="show_monthly_cashflow">Monthly Cashflow</label>
